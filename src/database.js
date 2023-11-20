@@ -30,6 +30,22 @@ export class Database {
     this.#persist()
   }
 
+  update(table, id, data) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+    
+    if (rowIndex > -1) {
+      const previousInfo = this.#database[table][rowIndex]
+      const updatedInfo = Object.entries(data).reduce((updatedInfo, [key, value]) => {
+        updatedInfo[key] = value
+        
+        return updatedInfo
+      }, previousInfo)
+
+      this.#database[table][rowIndex] = updatedInfo
+      this.#persist()
+    }
+  }
+
   delete(table, id) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
