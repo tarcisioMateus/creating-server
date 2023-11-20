@@ -36,8 +36,10 @@ export class Database {
     if (rowIndex > -1) {
       const previousInfo = this.#database[table][rowIndex]
       const updatedInfo = Object.entries(data).reduce((updatedInfo, [key, value]) => {
-        updatedInfo[key] = value
-        
+        if (value) {
+          updatedInfo[key] = value
+        }
+
         return updatedInfo
       }, previousInfo)
 
